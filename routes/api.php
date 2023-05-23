@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Api\V1\{
+    ParkingController,
     VehicleController,
     ZoneController
 };
 
-use App\Http\Controllers\Api\V1\Auth\{LoginController,
+use App\Http\Controllers\Api\V1\Auth\{
+    LoginController,
     LogoutController,
     PasswordUpdateController,
     ProfileController,
@@ -35,6 +37,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('password', PasswordUpdateController::class);
     Route::post('logout', LogoutController::class);
     Route::apiResource('vehicles', VehicleController::class);
+    Route::group(['prefix' => 'parkings'], function () {
+        Route::post('start', [ParkingController::class, 'start']);
+        Route::get('{parking}', [ParkingController::class, 'show']);
+        Route::put('{parking}', [ParkingController::class, 'stop']);
+    });
 });
 
 Route::get('zones', [ZoneController::class, 'index']);
