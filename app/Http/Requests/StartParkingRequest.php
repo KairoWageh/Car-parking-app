@@ -23,7 +23,7 @@ class StartParkingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'vehicle_id' => ['required', 'integer', Rule::exists('vehicles', 'id')->where('deleted_at', null)->where('user_id', auth()->id())],
+            'vehicle_id' => ['required', 'integer', Rule::exists('vehicles', 'id')->whereNull('deleted_at')->where('user_id', auth()->id())],
             'zone_id' => ['required', 'integer', Rule::exists('zones', 'id')]
         ];
     }
